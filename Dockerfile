@@ -2,7 +2,9 @@ FROM wordpress:php7.2-fpm-alpine
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp
 
-RUN head -n -1 /usr/local/bin/docker-entrypoint.sh > /usr/local/bin/docker-entrypoint-temp.sh; mv /usr/local/bin/docker-entrypoint-temp.sh /usr/local/bin/docker-entrypoint.sh
+RUN head -n -1 /usr/local/bin/docker-entrypoint.sh > /usr/local/bin/docker-entrypoint-temp.sh && \
+mv /usr/local/bin/docker-entrypoint-temp.sh /usr/local/bin/docker-entrypoint.sh && \
+chmod +x /usr/local/bin/docker-entrypoint.sh
 
 RUN { \
     echo 'if ! [ -d wp-content/plugins/wp-clone-by-wp-academy ]; then'; \
