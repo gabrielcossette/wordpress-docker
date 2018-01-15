@@ -93,6 +93,10 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 		"${uniqueEnvs[@]/#/WORDPRESS_}"
 		WORDPRESS_TABLE_PREFIX
 		WORDPRESS_DEBUG
+		SITE
+		USER
+		PASS
+		EMAIL
 	)
 	haveConfig=
 	for e in "${envs[@]}"; do
