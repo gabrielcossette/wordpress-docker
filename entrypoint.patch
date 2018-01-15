@@ -1,15 +1,17 @@
---- docker-entrypoint.sh	2018-01-14 21:46:48.927080028 -0500
-+++ entrypoint_modif	2018-01-14 21:46:22.835417487 -0500
-@@ -241,4 +241,12 @@
- 	done
- fi
+--- docker-entrypoint.sh	2018-01-14 21:54:53.045662900 -0500
++++ entrypoint_modif	2018-01-14 21:54:43.757752937 -0500
+@@ -235,6 +235,14 @@
+ EOPHP
+ 	fi
  
-+wp core install --url=$site --title="Site Web" --admin_user=$user --admin_password=$pass --admin_email=$email
++    wp core install --url=$site --title="Site Web" --admin_user=$user --admin_password=$pass --admin_email=$email
 +
-+wp plugin install wp-clone-by-wp-academy --activate
++	wp plugin install wp-clone-by-wp-academy --activate
 +
-+wp plugin install nginx-helper --activate
++	wp plugin install nginx-helper --activate
 +
-+wp plugin install redis-cache --activate
++	wp plugin install redis-cache --activate
 +
- exec "$@"
+ 	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
+ 	for e in "${envs[@]}"; do
+ 		unset "$e"
