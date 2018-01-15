@@ -235,7 +235,7 @@ $mysql->close();
 EOPHP
 	fi
 
-    wp core install --url=$site --title="Site Web" --admin_user=$user --admin_password=$pass --admin_email=$email
+    wp core install --url=$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL
 
 	wp plugin install wp-clone-by-wp-academy --activate
 
