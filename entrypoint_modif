@@ -238,14 +238,18 @@ if (!$mysql->query('CREATE DATABASE IF NOT EXISTS `' . $mysql->real_escape_strin
 $mysql->close();
 EOPHP
 	fi
+    
+    if [ ! -d wp-content/plugins/nginx-helper ]; then
+            
+    wp core install --url=$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL
 
-    wp core install --url=$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL --allow-root
+	wp plugin install wp-clone-by-wp-academy --activate
 
-	wp plugin install wp-clone-by-wp-academy --activate --allow-root
+	wp plugin install nginx-helper --activate
 
-	wp plugin install nginx-helper --activate --allow-root
-
-	wp plugin install redis-cache --activate --allow-root
+	wp plugin install redis-cache --activate
+	
+	fi
 
 	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
 	for e in "${envs[@]}"; do

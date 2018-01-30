@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-01-14 22:45:41.920666469 -0500
-+++ entrypoint_modif	2018-01-14 22:45:25.756805249 -0500
+--- docker-entrypoint.sh	2018-01-29 21:46:43.999464806 -0500
++++ entrypoint_modif	2018-01-29 21:46:11.819654456 -0500
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -11,18 +11,22 @@
  	)
  	haveConfig=
  	for e in "${envs[@]}"; do
-@@ -235,6 +239,14 @@
+@@ -234,6 +238,18 @@
+ $mysql->close();
  EOPHP
  	fi
++    
++    if [ ! -d wp-content/plugins/nginx-helper ]; then
++            
++    wp core install --url=$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL
++
++	wp plugin install wp-clone-by-wp-academy --activate
++
++	wp plugin install nginx-helper --activate
++
++	wp plugin install redis-cache --activate
++	
++	fi
  
-+    wp core install --url=$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL --allow-root
-+
-+	wp plugin install wp-clone-by-wp-academy --activate --allow-root
-+
-+	wp plugin install nginx-helper --activate --allow-root
-+
-+	wp plugin install redis-cache --activate --allow-root
-+
  	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
  	for e in "${envs[@]}"; do
- 		unset "$e"
