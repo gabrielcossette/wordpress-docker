@@ -240,6 +240,8 @@ EOPHP
 	fi
     
     if [ ! -d wp-content/plugins/nginx-helper ]; then
+
+	echo >&2 "WordPress not configured..."
             
     wp core install --url=$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL --allow-root
 
