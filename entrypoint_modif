@@ -251,6 +251,8 @@ EOPHP
 
 	wp plugin install redis-cache --activate --allow-root
 	
+	chown www-data:www-data -R ./
+	
 	fi
 
 	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
