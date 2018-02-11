@@ -243,7 +243,7 @@ EOPHP
 
 	echo >&2 "WordPress not configured..."
             
-    wp core install --url=https://$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL --allow-root
+    wp core install --url=$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL --allow-root
 
 	wp plugin install wp-clone-by-wp-academy --activate --allow-root
 
