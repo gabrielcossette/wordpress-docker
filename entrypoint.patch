@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-02-24 23:27:12.360942678 -0500
-+++ entrypoint_modif	2018-02-24 23:12:15.924069440 -0500
+--- docker-entrypoint.sh	2018-02-24 23:51:29.419228306 -0500
++++ entrypoint_modif	2018-02-24 23:51:22.887269685 -0500
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -36,7 +36,7 @@
  
  	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
  	for e in "${envs[@]}"; do
-@@ -241,4 +263,19 @@
+@@ -241,4 +263,21 @@
  	done
  fi
  
@@ -44,6 +44,8 @@
 +
 +CONF=/etc/ssmtp/ssmtp.conf
 +rm $CONF
++
++file_env 'SSMTP_AuthPass'
 +
 +for E in $(env)
 +do
