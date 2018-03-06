@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-05 21:36:46.346606487 -0500
-+++ entrypoint_modif	2018-03-05 21:36:15.606759042 -0500
+--- docker-entrypoint.sh	2018-03-05 22:20:19.734533209 -0500
++++ entrypoint_modif	2018-03-05 22:17:20.899530022 -0500
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -36,25 +36,20 @@
  
  	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
  	for e in "${envs[@]}"; do
-@@ -241,4 +263,21 @@
+@@ -241,4 +263,16 @@
  	done
  fi
  
-+echo "Setup ssmtp"
++echo "Setup msmtp"
 +
-+CONF=/etc/ssmtp/ssmtp.conf
-+rm $CONF
++file_env 'EMAIL_PW'
 +
-+file_env 'SSMTP_AuthPass'
++sed -i "s/host           SMTP/host           $EMAIL_SERVER/" /etc/msmtprc
++sed -i "s/port           PORT/port           $EMAIL_PORT/" /etc/msmtprc
++sed -i "s/from           FROM/from           $EMAIL_FROM/" /etc/msmtprc
++sed -i "s/user           USER/user           $EMAIL_USER/" /etc/msmtprc
++sed -i "s/password       PW/password       $EMAIL_PW/" /etc/msmtprc
 +
-+for E in $(env)
-+do
-+  if [ "$(echo $E | sed -e '/^SSMTP_/!d' )" ]
-+  then
-+    echo $E | sed -e 's/^SSMTP_//' >> $CONF
-+  fi
-+done
-+
-+echo 'sendmail_path = "/usr/sbin/ssmtp -t"' > /usr/local/etc/php/conf.d/mail.ini
++echo 'sendmail_path = "/usr/sbin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
 +
  exec "$@"
