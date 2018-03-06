@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-03 23:54:13.572959102 -0500
-+++ entrypoint_modif	2018-03-03 23:54:01.652975473 -0500
+--- docker-entrypoint.sh	2018-03-05 21:36:46.346606487 -0500
++++ entrypoint_modif	2018-03-05 21:36:15.606759042 -0500
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -55,6 +55,6 @@
 +  fi
 +done
 +
-+echo 'sendmail_path = "/usr/sbin/sendmail -t"' > /usr/local/etc/php/conf.d/mail.ini
++echo 'sendmail_path = "/usr/sbin/ssmtp -t"' > /usr/local/etc/php/conf.d/mail.ini
 +
  exec "$@"
