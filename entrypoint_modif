@@ -261,7 +261,6 @@ EOPHP
 	for e in "${envs[@]}"; do
 		unset "$e"
 	done
-fi
 
 echo "Setup msmtp"
 
@@ -274,5 +273,7 @@ sed -i "s/user           USER/user           $EMAIL_USER/" /etc/msmtprc
 sed -i "s/password       PW/password       $EMAIL_PW/" /etc/msmtprc
 
 echo 'sendmail_path = "/usr/sbin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
+
+fi
 
 exec "$@"

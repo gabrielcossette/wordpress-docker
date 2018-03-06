@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-05 22:20:19.734533209 -0500
-+++ entrypoint_modif	2018-03-05 22:17:20.899530022 -0500
+--- docker-entrypoint.sh	2018-03-06 13:27:30.737237224 -0500
++++ entrypoint_modif	2018-03-06 13:27:22.336935022 -0500
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -11,7 +11,7 @@
  	)
  	haveConfig=
  	for e in "${envs[@]}"; do
-@@ -234,6 +238,24 @@
+@@ -234,11 +238,42 @@
  $mysql->close();
  EOPHP
  	fi
@@ -36,10 +36,9 @@
  
  	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
  	for e in "${envs[@]}"; do
-@@ -241,4 +263,16 @@
+ 		unset "$e"
  	done
- fi
- 
++
 +echo "Setup msmtp"
 +
 +file_env 'EMAIL_PW'
@@ -52,4 +51,6 @@
 +
 +echo 'sendmail_path = "/usr/sbin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
 +
+ fi
+ 
  exec "$@"
