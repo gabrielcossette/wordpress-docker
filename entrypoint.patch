@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-06 13:27:30.737237224 -0500
-+++ entrypoint_modif	2018-03-06 13:27:22.336935022 -0500
+--- docker-entrypoint.sh	2018-03-06 22:55:20.033242278 -0500
++++ entrypoint_modif	2018-03-06 22:54:45.223578389 -0500
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -11,7 +11,7 @@
  	)
  	haveConfig=
  	for e in "${envs[@]}"; do
-@@ -234,11 +238,42 @@
+@@ -234,11 +238,44 @@
  $mysql->close();
  EOPHP
  	fi
@@ -43,11 +43,13 @@
 +
 +file_env 'EMAIL_PW'
 +
-+sed -i "s/host           SMTP/host           $EMAIL_SERVER/" /etc/msmtprc
-+sed -i "s/port           PORT/port           $EMAIL_PORT/" /etc/msmtprc
-+sed -i "s/from           FROM/from           $EMAIL_FROM/" /etc/msmtprc
-+sed -i "s/user           USER/user           $EMAIL_USER/" /etc/msmtprc
-+sed -i "s/password       PW/password       $EMAIL_PW/" /etc/msmtprc
++echo "account        default" >> /etc/msmtprc
++echo "host           $EMAIL_SERVER" >> /etc/msmtprc
++echo "port           $EMAIL_PORT" >> /etc/msmtprc
++echo "from           $EMAIL_FROM" >> /etc/msmtprc
++echo "user           $EMAIL_USER" >> /etc/msmtprc
++echo "password       $EMAIL_PW" >> /etc/msmtprc
++echo "account default : default" >> /etc/msmtprc
 +
 +echo 'sendmail_path = "/usr/sbin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
 +

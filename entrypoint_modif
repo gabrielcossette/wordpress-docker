@@ -266,11 +266,13 @@ echo "Setup msmtp"
 
 file_env 'EMAIL_PW'
 
-sed -i "s/host           SMTP/host           $EMAIL_SERVER/" /etc/msmtprc
-sed -i "s/port           PORT/port           $EMAIL_PORT/" /etc/msmtprc
-sed -i "s/from           FROM/from           $EMAIL_FROM/" /etc/msmtprc
-sed -i "s/user           USER/user           $EMAIL_USER/" /etc/msmtprc
-sed -i "s/password       PW/password       $EMAIL_PW/" /etc/msmtprc
+echo "account        default" >> /etc/msmtprc
+echo "host           $EMAIL_SERVER" >> /etc/msmtprc
+echo "port           $EMAIL_PORT" >> /etc/msmtprc
+echo "from           $EMAIL_FROM" >> /etc/msmtprc
+echo "user           $EMAIL_USER" >> /etc/msmtprc
+echo "password       $EMAIL_PW" >> /etc/msmtprc
+echo "account default : default" >> /etc/msmtprc
 
 echo 'sendmail_path = "/usr/sbin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
 
