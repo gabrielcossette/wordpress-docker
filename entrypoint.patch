@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-06 22:55:20.033242278 -0500
-+++ entrypoint_modif	2018-03-06 22:54:45.223578389 -0500
+--- docker-entrypoint.sh	2018-03-07 17:43:47.870029296 -0500
++++ entrypoint_modif	2018-03-07 17:43:40.077703741 -0500
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -11,7 +11,7 @@
  	)
  	haveConfig=
  	for e in "${envs[@]}"; do
-@@ -234,11 +238,44 @@
+@@ -234,11 +238,46 @@
  $mysql->close();
  EOPHP
  	fi
@@ -33,11 +33,6 @@
 +	set_config 'WP_REDIS_HOST' "redis"
 +	
 +	fi
- 
- 	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
- 	for e in "${envs[@]}"; do
- 		unset "$e"
- 	done
 +
 +echo "Setup msmtp"
 +
@@ -49,9 +44,16 @@
 +echo "from           $EMAIL_FROM" >> /etc/msmtprc
 +echo "user           $EMAIL_USER" >> /etc/msmtprc
 +echo "password       $EMAIL_PW" >> /etc/msmtprc
-+echo "account default : default" >> /etc/msmtprc
 +
-+echo 'sendmail_path = "/usr/sbin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
++echo 'sendmail_path = "/usr/bin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
++
++chmod 400 /etc/msmtprc
++chown www-data:www-data /etc/msmtprc
+ 
+ 	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
+ 	for e in "${envs[@]}"; do
+ 		unset "$e"
+ 	done
 +
  fi
  
