@@ -257,11 +257,6 @@ EOPHP
 	
 	fi
 
-	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
-	for e in "${envs[@]}"; do
-		unset "$e"
-	done
-
 echo "Setup msmtp"
 
 file_env 'EMAIL_PW'
@@ -272,9 +267,16 @@ echo "port           $EMAIL_PORT" >> /etc/msmtprc
 echo "from           $EMAIL_FROM" >> /etc/msmtprc
 echo "user           $EMAIL_USER" >> /etc/msmtprc
 echo "password       $EMAIL_PW" >> /etc/msmtprc
-echo "account default : default" >> /etc/msmtprc
 
-echo 'sendmail_path = "/usr/sbin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
+echo 'sendmail_path = "/usr/bin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
+
+chmod 400 /etc/msmtprc
+chown www-data:www-data /etc/msmtprc
+
+	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
+	for e in "${envs[@]}"; do
+		unset "$e"
+	done
 
 fi
 
