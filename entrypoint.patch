@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-07 17:43:47.870029296 -0500
-+++ entrypoint_modif	2018-03-07 17:43:40.077703741 -0500
+--- docker-entrypoint.sh	2018-03-08 22:45:14.992575940 -0500
++++ entrypoint_modif	2018-03-08 22:45:13.112586817 -0500
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -11,7 +11,7 @@
  	)
  	haveConfig=
  	for e in "${envs[@]}"; do
-@@ -234,11 +238,46 @@
+@@ -234,11 +238,50 @@
  $mysql->close();
  EOPHP
  	fi
@@ -31,7 +31,11 @@
 +	chown www-data:www-data -R ./
 +	
 +	set_config 'WP_REDIS_HOST' "redis"
++
++	set_config 'RT_WP_NGINX_HELPER_CACHE_PATH' "/tmp/cache"
 +	
++	mkdir -p wp-content/uploads/nginx-helper
++
 +	fi
 +
 +echo "Setup msmtp"

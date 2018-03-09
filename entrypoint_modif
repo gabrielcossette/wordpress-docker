@@ -245,8 +245,6 @@ EOPHP
             
     wp core install --url=$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL --allow-root
 
-	wp plugin install wp-clone-by-wp-academy --activate --allow-root
-
 	wp plugin install nginx-helper --activate --allow-root
 
 	wp plugin install redis-cache --activate --allow-root
@@ -254,7 +252,11 @@ EOPHP
 	chown www-data:www-data -R ./
 	
 	set_config 'WP_REDIS_HOST' "redis"
+
+	set_config 'RT_WP_NGINX_HELPER_CACHE_PATH' "/tmp/cache"
 	
+	mkdir -p wp-content/uploads/nginx-helper
+
 	fi
 
 echo "Setup msmtp"
