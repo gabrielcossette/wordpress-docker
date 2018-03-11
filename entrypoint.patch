@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-08 22:45:14.992575940 -0500
-+++ entrypoint_modif	2018-03-08 22:45:13.112586817 -0500
+--- docker-entrypoint.sh	2018-03-10 22:56:46.156381326 -0500
++++ entrypoint_modif	2018-03-08 22:46:45.144055135 -0500
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -11,7 +11,7 @@
  	)
  	haveConfig=
  	for e in "${envs[@]}"; do
-@@ -234,11 +238,50 @@
+@@ -234,11 +238,48 @@
  $mysql->close();
  EOPHP
  	fi
@@ -21,8 +21,6 @@
 +	echo >&2 "WordPress not configured..."
 +            
 +    wp core install --url=$SITE --title="Site Web" --admin_user=$USER --admin_password=$PASS --admin_email=$EMAIL --allow-root
-+
-+	wp plugin install wp-clone-by-wp-academy --activate --allow-root
 +
 +	wp plugin install nginx-helper --activate --allow-root
 +
