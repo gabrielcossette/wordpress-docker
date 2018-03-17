@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-10 22:56:46.156381326 -0500
-+++ entrypoint_modif	2018-03-08 22:46:45.144055135 -0500
+--- docker-entrypoint.sh	2018-03-17 18:45:55.046796239 -0400
++++ entrypoint_modif	2018-03-17 18:45:18.367012286 -0400
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -11,7 +11,7 @@
  	)
  	haveConfig=
  	for e in "${envs[@]}"; do
-@@ -234,11 +238,48 @@
+@@ -234,11 +238,50 @@
  $mysql->close();
  EOPHP
  	fi
@@ -29,6 +29,8 @@
 +	chown www-data:www-data -R ./
 +	
 +	set_config 'WP_REDIS_HOST' "redis"
++
++	set_config 'WP_CACHE_KEY_SALT' "$WP_URL"
 +
 +	set_config 'RT_WP_NGINX_HELPER_CACHE_PATH' "/tmp/cache"
 +	
