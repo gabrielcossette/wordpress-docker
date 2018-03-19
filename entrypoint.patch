@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-18 22:36:53.873504124 -0400
-+++ entrypoint_modif	2018-03-18 22:36:21.385729834 -0400
+--- docker-entrypoint.sh	2018-03-18 22:47:01.005911016 -0400
++++ entrypoint_modif	2018-03-18 22:46:56.405934613 -0400
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -51,7 +51,7 @@
 +
 +echo 'sendmail_path = "/usr/bin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
 +
-+# DEV
++# DEV1
 +
 +chmod 400 /etc/msmtprc
 +chown www-data:www-data /etc/msmtprc
