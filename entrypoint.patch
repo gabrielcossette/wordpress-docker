@@ -1,5 +1,5 @@
---- docker-entrypoint.sh	2018-03-18 22:47:01.005911016 -0400
-+++ entrypoint_modif	2018-03-18 22:46:56.405934613 -0400
+--- docker-entrypoint.sh	2018-03-19 21:26:26.396844356 -0400
++++ entrypoint_modif	2018-03-19 21:26:14.664935066 -0400
 @@ -93,6 +93,10 @@
  		"${uniqueEnvs[@]/#/WORDPRESS_}"
  		WORDPRESS_TABLE_PREFIX
@@ -11,7 +11,7 @@
  	)
  	haveConfig=
  	for e in "${envs[@]}"; do
-@@ -234,11 +238,52 @@
+@@ -234,11 +238,50 @@
  $mysql->close();
  EOPHP
  	fi
@@ -50,8 +50,6 @@
 +echo "password       $EMAIL_PW" >> /etc/msmtprc
 +
 +echo 'sendmail_path = "/usr/bin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
-+
-+# DEV1
 +
 +chmod 400 /etc/msmtprc
 +chown www-data:www-data /etc/msmtprc

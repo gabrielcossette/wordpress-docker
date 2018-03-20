@@ -274,8 +274,6 @@ echo "password       $EMAIL_PW" >> /etc/msmtprc
 
 echo 'sendmail_path = "/usr/bin/msmtp -C /etc/msmtprc -t"' > /usr/local/etc/php/conf.d/mail.ini
 
-# DEV1
-
 chmod 400 /etc/msmtprc
 chown www-data:www-data /etc/msmtprc
 
