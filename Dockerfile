@@ -4,7 +4,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 RUN apk --no-cache add openssl msmtp
 
-ENV PHPREDIS_VERSION 3.1.2
+ENV PHPREDIS_VERSION 3.1.6
 
 RUN docker-php-source extract \
   && curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz \
