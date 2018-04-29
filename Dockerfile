@@ -16,8 +16,6 @@ RUN docker-php-source extract \
 
 ADD uploads.ini /usr/local/etc/php/conf.d/
 
-ADD entrypoint.patch ./
-
 ADD msmtprc /etc/msmtprc
 
-RUN patch /usr/local/bin/docker-entrypoint.sh entrypoint.patch && rm entrypoint.patch
+ADD docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
