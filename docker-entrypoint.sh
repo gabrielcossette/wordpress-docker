@@ -250,7 +250,7 @@ EOPHP
 	wp plugin install redis-cache --activate --allow-root
 	
 	chown www-data:www-data -R ./
-	chmod 664 -R ../html
+	chmod 774 -R ../html
 
 	sed -i "/WP_DEBUG/a define('RT_WP_NGINX_HELPER_CACHE_PATH', '/tmp/cache');" wp-config.php
 	
